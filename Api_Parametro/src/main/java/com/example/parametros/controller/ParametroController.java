@@ -23,6 +23,7 @@ public class ParametroController {
 
     @PostMapping
     public ResponseEntity<ParametroSaab> registrar(@RequestBody ParametroSaab parametro){
+
         return ResponseEntity.ok(parametroService.guardar(parametro));
     }
 
