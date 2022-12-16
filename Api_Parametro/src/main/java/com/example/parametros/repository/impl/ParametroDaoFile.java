@@ -27,8 +27,9 @@ public class ParametroDaoFile implements IDao<ParametroSaab> {
 
 		try {
 			//se abre el fichero para lectura y escritura
-			fichero = new RandomAccessFile("//CES-INTEGRACION/X-Plane 11/Resources/plugins/datos.dat", "rw");
-			fichero.seek(id); //nos situamos en la posición id para guardar el dato del archivo
+			//fichero = new RandomAccessFile("//CES-INTEGRACION/X-Plane 11/Resources/plugins/datos.dat", "rw");
+            fichero = new RandomAccessFile("E:/Trabajo_2022/SAAB/Sw_Adquisicion/Archivo/datos.dat", "rw");
+            fichero.seek(id); //nos situamos en la posición id para guardar el dato del archivo
 			fichero.write(valor);       //se escribe en el archivo
 		} catch (FileNotFoundException ex) {
 			//System.out.println(ex.getMessage());
@@ -57,8 +58,9 @@ public class ParametroDaoFile implements IDao<ParametroSaab> {
         int n = 0;
              try {
             //se abre el fichero para lectura y escritura
-            fichero = new RandomAccessFile("//CES-INTEGRACION/X-Plane 11/Resources/plugins/datos.dat", "rw");
-            fichero.seek(numero); //nos situamos en posición id para obtener el valor.
+            //fichero = new RandomAccessFile("//CES-INTEGRACION/X-Plane 11/Resources/plugins/datos.dat", "rw");
+             fichero = new RandomAccessFile("E:/Trabajo_2022/SAAB/Sw_Adquisicion/Archivo/datos.dat", "rw");
+             fichero.seek(numero); //nos situamos en posición id para obtener el valor.
             p.setId(id);
             p.setValor( fichero.read());
 
