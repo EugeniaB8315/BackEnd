@@ -16,8 +16,8 @@ public class ParametroDaoFile implements IDao<ParametroSaab> {
 
     private static Logger logger= Logger.getLogger(ParametroDaoFile.class);
     static RandomAccessFile fichero = null;
-
-
+//  private static String dirFile= "//CES-INTEGRACION/X-Plane 11/Resources/plugins/datos.dat";   Valepc
+    private static String dirFile= "E:/Trabajo_2022/SAAB/Sw_Adquisicion/Archivo/datos.dat";
 
   @Override
    public ParametroSaab guardar(ParametroSaab parametroSaab) {
@@ -27,9 +27,8 @@ public class ParametroDaoFile implements IDao<ParametroSaab> {
 
 		try {
 			//se abre el fichero para lectura y escritura
-			//fichero = new RandomAccessFile("//CES-INTEGRACION/X-Plane 11/Resources/plugins/datos.dat", "rw");
-            fichero = new RandomAccessFile("E:/Trabajo_2022/SAAB/Sw_Adquisicion/Archivo/datos.dat", "rw");
-            fichero.seek(id); //nos situamos en la posición id para guardar el dato del archivo
+			fichero = new RandomAccessFile(dirFile, "rw");
+            fichero.seek(id);            //nos situamos en la posición id para guardar el dato del archivo
 			fichero.write(valor);       //se escribe en el archivo
 		} catch (FileNotFoundException ex) {
 			//System.out.println(ex.getMessage());
@@ -50,7 +49,66 @@ public class ParametroDaoFile implements IDao<ParametroSaab> {
       return parametroSaab;
   }
 
-///////////////////listo///////////////////
+
+    @Override
+    public String guardarMDF(int id_parametro) {
+
+        int id=(id_parametro-1)*2;
+       // int valor=parametroSaab.getValor();
+        int i=0;
+        int nPulsadores=15;
+        String salida="";
+        int [] id_parametrosMDF= {598,599,600,601,602,603,605,606,607,608,609,611,612,613,614};
+        try {
+            //se abre el fichero para lectura y escritura
+            fichero = new RandomAccessFile(dirFile, "rw");
+
+            if(id>20)
+            {
+                for(i=0;i<id_parametrosMDF.length;i++)
+                {
+                    fichero.seek(id_parametrosMDF[i]); //nos situamos en la posición id para guardar el dato del archivo
+                    fichero.write(0);       //se escribe en el archivo
+                }
+
+                salida="MDF en 0";
+
+
+            }
+
+            else{
+                fichero.seek(id_parametrosMDF[id-1]); //nos situamos en la posición id para guardar el dato del archivo
+                fichero.write(1);       //se escribe en el archivo
+                salida="MDF id:" + id_parametrosMDF[id_parametro] +" valor: 1";
+            }
+
+
+        } catch (FileNotFoundException ex) {
+            //System.out.println(ex.getMessage());
+            logger.info("error1" + ex.getMessage());
+        } catch (IOException ex) {
+            //System.out.println(ex.getMessage());
+            logger.info("error2" + ex.getMessage());
+        } finally {
+            try {
+                if (fichero != null) {
+                    fichero.close();
+                }
+            } catch (IOException e) {
+                logger.info("error3" + e.getMessage());
+                //System.out.println(e.getMessage());
+            }
+        }
+        return salida;
+    }
+
+
+
+
+
+
+
+    ///////////////////listo///////////////////
     @Override
     public ParametroSaab buscar(Integer id) {
         ParametroSaab p= new ParametroSaab();
@@ -58,7 +116,7 @@ public class ParametroDaoFile implements IDao<ParametroSaab> {
         int n = 0;
              try {
             //se abre el fichero para lectura y escritura
-            //fichero = new RandomAccessFile("//CES-INTEGRACION/X-Plane 11/Resources/plugins/datos.dat", "rw");
+             fichero = new RandomAccessFile(dirFile, "rw");
              fichero = new RandomAccessFile("E:/Trabajo_2022/SAAB/Sw_Adquisicion/Archivo/datos.dat", "rw");
              fichero.seek(numero); //nos situamos en posición id para obtener el valor.
             p.setId(id);
@@ -98,8 +156,6 @@ public class ParametroDaoFile implements IDao<ParametroSaab> {
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
-
-
     }
 
     /*
